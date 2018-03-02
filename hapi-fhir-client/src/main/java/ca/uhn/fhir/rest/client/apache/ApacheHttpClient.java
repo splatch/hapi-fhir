@@ -23,10 +23,12 @@ package ca.uhn.fhir.rest.client.apache;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ByteArrayEntity;
@@ -105,6 +107,15 @@ public class ApacheHttpClient extends BaseHttpClient implements IHttpClient {
 
 	private ApacheHttpRequest createHttpRequest(HttpEntity theEntity) {
 		HttpRequestBase request = constructRequestBase(theEntity);
+
+		int timeout = ((Long) TimeUnit.MINUTES.toMillis(5)).intValue();
+		RequestConfig requestConfig = RequestConfig.custom()
+			.setSocketTimeout(timeout)
+			.setConnectTimeout(timeout)
+			.setConnectionRequestTimeout(timeout)
+			.build();
+		request.setConfig(requestConfig);
+
 		ApacheHttpRequest result = new ApacheHttpRequest(myClient, request);
 		return result;
 	}
