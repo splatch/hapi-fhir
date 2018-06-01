@@ -31,7 +31,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import ca.uhn.fhir.model.api.IQueryParameterType;
-import com.sun.prism.image.Coords;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
